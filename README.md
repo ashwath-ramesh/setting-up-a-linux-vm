@@ -20,6 +20,11 @@
 - reboot
 - List all users on vm: cat /etc/passwd
 
+To add non-root user as sudo-er
+- Edit the /etc/sudoers file using the visudo command:
+- john ALL=(ALL) ALL
+
+
 ## 2. Install python & libraries
 - check python3 --version
 - apt install python3-pip
