@@ -39,14 +39,20 @@
 - use the pip freeze command to create a requirements.txt file from the packages installed in your current environment. Run command: pip freeze > requirements.txt (or) pip install requests beautifulsoup3 pandas
 
 ## Note on Authentication (SSH keys & passwords)
-### Generating an SSH key
+### SSH Keys
+#### Generating an SSH key
 - ssh-keygen
 - ssh-keygen -t rsa -b 4096 -C "my_comment"
 
-### Logging into a remote server using a specific private key
+#### Logging into a remote server using a specific private key
 - ssh -i ~/.ssh/id_rsa root@123.456.789.012
 
-### Logging in using passwords
+#### Adding in new public SSH keys to the vm
+- go to: nano ~/.ssh/authorized_keys
+- add the public key in a new line
+
+### Passwords
+#### Logging in using passwords
 **God forbid, you want to login using password. Then you have to set this up inside the linux vm (logged in as root user)**
 - Open the /etc/ssh/sshd_config file in a text editor.
 - Locate the line #PasswordAuthentication yes and remove the # character to uncomment the line.
