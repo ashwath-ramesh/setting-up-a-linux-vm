@@ -37,7 +37,7 @@
   - If you get error error: unknown switch `i', then use the following command instead: GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa' git clone git@github.com:USERNAME/REPOSITORY.git
 
 ## 4. Install venv
-- Create a venv: python3 -m venv myenv
+- Create a venv: python3 -m venv myenv (or) apt install python3.10-venv
 - Activate the venv: source myenv/bin/activate
 
 
