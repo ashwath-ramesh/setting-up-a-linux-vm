@@ -52,7 +52,9 @@ source myenv/bin/activate
 
 
 ## 5. Install python libraries
-- use the pip freeze command to create a requirements.txt file from the packages installed in your current environment. Run command: pip freeze > requirements.txt (or) pip install requests beautifulsoup3 pandas
+- use the pip freeze command to create a requirements.txt file from the packages installed in your current environment. 
+- Run command: pip freeze > requirements.txt 
+- pip install requests beautifulsoup3 pandas (or) pip install -r requirements.txt
 
 ## Note on Authentication (SSH keys & passwords)
 ### SSH Keys
