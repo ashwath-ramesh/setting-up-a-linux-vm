@@ -45,6 +45,11 @@ To add non-root user as sudo-er
 - Create a venv: python3 -m venv myenv (or) apt install python3.10-venv
 - Activate the venv: source myenv/bin/activate
 
+pip install virtualenv
+virtualenv myenv
+source myenv/bin/activate
+
+
 
 ## 5. Install python libraries
 - use the pip freeze command to create a requirements.txt file from the packages installed in your current environment. Run command: pip freeze > requirements.txt (or) pip install requests beautifulsoup3 pandas
