@@ -31,3 +31,11 @@
 
 ## 5. Install python libraries
 - use the pip freeze command to create a requirements.txt file from the packages installed in your current environment. Run command: pip freeze > requirements.txt (or) pip install requests beautifulsoup3 pandas
+
+## Note on SSH keys
+### Generating a key
+- ssh-keygen
+- ssh-keygen -t rsa -b 4096 -C "my_comment"
+
+### Logging into a remote server using a specific private key
+- ssh -i ~/.ssh/id_rsa@123.456.7890
