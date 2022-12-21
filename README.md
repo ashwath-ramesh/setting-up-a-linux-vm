@@ -38,4 +38,4 @@
 - ssh-keygen -t rsa -b 4096 -C "my_comment"
 
 ### Logging into a remote server using a specific private key
-- ssh -i ~/.ssh/id_rsa@123.456.7890
+- ssh -i ~/.ssh/id_rsa root@123.456.789.012
