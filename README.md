@@ -56,6 +56,9 @@ source myenv/bin/activate
 - Run command: pip freeze > requirements.txt 
 - pip install requests beautifulsoup3 pandas (or) pip install -r requirements.txt
 
+**If you need sqlite3**
+sudo apt install sqlite3
+
 ## Note on Authentication (SSH keys & passwords)
 ### SSH Keys
 #### Generating an SSH key
