@@ -5,9 +5,26 @@
 - Ensure you have SSH key authentication. See below.
 - apt update
 - apt upgrade
-- create a non root user
+- create a non-root user
   - adduser john
-  - To add the user to a specific group, use the usermod command. For example, to add the user john to the sudo group, which allows the user to execute commands with superuser privileges, type usermod -aG sudo john.
+  - confirm user created/check list of users: cut -d: -f1 /etc/passwd
+  - login as user john: su john
+  - ensure that the users directory exists in /home/john/
+  - exit from john to root: exit
+  - as root user go to: sudo nano /etc/ssh/sshd_config
+  - Go to bottom of file/modify new lines, save and exit: AllowUsers john root
+  - systemctl restart ssh (or) systemctl restart sshd
+
+
+  - Create Home Directory + .ssh Directory: mkdir -p /home/mynewuser/.ssh
+  - Create Authorized Keys File: touch /home/mynewuser/.ssh/authorized_keys
+  - Add User to sudo Group: usermod -aG sudo john.
+  - Set Permissions: 
+    - chown -R mynewuser:mynewuser /home/mynewuser/
+    - change the ownership of the /home/mynewuser directory: chown root:root /home/mynewuser
+    - chmod 700 /home/mynewuser/.ssh
+    - chmod 644 /home/mynewuser/.ssh/authorized_keys
+
   - Ensure 'john' has SSH key authentication. Password authentication should be not allowed by default.
 - If you need to rename the linux server:
   - Use the hostnamectl command to view the current hostname of the system
@@ -58,3 +75,7 @@
 - Locate the line #PasswordAuthentication yes and remove the # character to uncomment the line.
 - Save the changes to the file and exit the text editor.
 - Restart the SSH daemon to apply the changes: systemctl restart ssh
+
+
+References
+https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-18-04
