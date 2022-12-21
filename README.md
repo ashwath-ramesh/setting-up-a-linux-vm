@@ -2,9 +2,11 @@
 # Setting up a linux virtual machine to run scripts
 
 ## 1. Create the linux virtual machine
-- apt udpate
+- apt update
 - apt upgrade
 - create a non root user
+  - adduser john
+  - To add the user to a specific group, use the usermod command. For example, to add the user john to the sudo group, which allows the user to execute commands with superuser privileges, type usermod -aG sudo john.
 - If you need to rename the linux server:
   - Use the hostnamectl command to view the current hostname of the system
   - Use the command to set the new hostname of the system. hostnamectl set-hostname <new_hostname>
