@@ -27,6 +27,7 @@
 - cd /home
 
 ## 3. Git clone repository using SSH
+- Login as non-root user!
 - Generate an SSH key pair on the Linux virtual machine: ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 - Add your public SSH key to your GitHub account. You can do this by going to your GitHub account settings, and selecting "SSH and GPG keys" from the left-hand menu. Click the "New SSH key" button, and paste your public SSH key into the "Key" field.
 - Clone the repository using the git clone command, specifying the SSH URL of the repository: 
