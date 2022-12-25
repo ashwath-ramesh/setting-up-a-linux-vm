@@ -2,28 +2,50 @@
 # Setting up a linux virtual machine to run scripts
 
 ## 1. Create the linux virtual machine
-- Ensure you have SSH key authentication. See below.
+- Ensure you have SSH key authentication for root user. See below.
 - apt update
 - apt upgrade
+
 - create a non-root user
   - adduser john
-  - confirm user created/check list of users: cut -d: -f1 /etc/passwd
+  - confirm user created/check list of users: cut -d: -f1 /etc/passwd (or) cat /etc/passwd
   - login as user john: su john
   - ensure that the users directory exists in /home/john/
   - exit from john to root: exit
-  - as root user go to: sudo nano /etc/ssh/sshd_config
+
+- give john (and root) SSH access
+  - As root user go to: sudo nano /etc/ssh/sshd_config
   - Go to bottom of file/modify new lines, save and exit: AllowUsers john root
   - systemctl restart ssh (or) systemctl restart sshd
+  - exit
+  - ssh john@xxx.xxx.xxx.xxx
+
+- Ensure that john has an authorized_keys file in the .ssh directory
+  - From root user account, go to: /home/john
+  - mkdir .ssh
+  - touch authorized_keys
+  - nano authorized_keys
+  - Save a new SSH key that belongs to John on the local and remote machine. Save the public key in this file.
+
+**To add non-root user as sudo-er**
+- goto root user account
+- Add user john to group sudo: 'usermod -aG sudo john'
+- Check what groups user john belongs to: 'groups john'
+- Now exit from root user. Exit from john.
+- Relogin as john
+- 'sudo whoami'
+- Enter password
+- Output should be 'root'
+
 - If you need to rename the linux server:
   - Use the hostnamectl command to view the current hostname of the system
   - Use the command to set the new hostname of the system. hostnamectl set-hostname <new_hostname>
+
+** [INCOMPLETE] How to disable SSH for root user**
+- root user can only access terminal through normal user entry, then su -
+- Now make sure that
+
 - reboot
-- List all users on vm: cat /etc/passwd
-
-To add non-root user as sudo-er
-- Edit the /etc/sudoers file using the visudo command:
-- john ALL=(ALL) ALL
-
 
 ## 2. Install python & libraries
 - check python3 --version
@@ -62,7 +84,7 @@ sudo apt install sqlite3
 ## Note on Authentication (SSH keys & passwords)
 ### SSH Keys
 #### Generating an SSH key
-- ssh-keygen
+- ssh-keygen (or)
 - ssh-keygen -t rsa -b 4096 -C "my_comment"
 
 #### Logging into a remote server using a specific private key
