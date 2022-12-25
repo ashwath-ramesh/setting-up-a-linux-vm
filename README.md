@@ -6,14 +6,14 @@
 - apt update
 - apt upgrade
 
-- create a non-root user
+- **create a non-root user**
   - adduser john
   - confirm user created/check list of users: cut -d: -f1 /etc/passwd (or) cat /etc/passwd
   - login as user john: su john
   - ensure that the users directory exists in /home/john/
   - exit from john to root: exit
 
-- give john (and root) SSH access
+- **give john (and root) SSH access**
   - As root user go to: sudo nano /etc/ssh/sshd_config
   - Go to bottom of file/modify new lines, save and exit: AllowUsers john root
   - systemctl restart ssh (or) systemctl restart sshd
@@ -37,11 +37,11 @@
 - Enter password
 - Output should be 'root'
 
-- If you need to rename the linux server:
+- **If you need to rename the linux server:**
   - Use the hostnamectl command to view the current hostname of the system
   - Use the command to set the new hostname of the system. hostnamectl set-hostname <new_hostname>
 
-** [INCOMPLETE] How to disable SSH for root user**
+**[INCOMPLETE] How to disable SSH for root user**
 - root user can only access terminal through normal user entry, then su -
 - Now make sure that
 
