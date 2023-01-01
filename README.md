@@ -12,9 +12,6 @@ CHECKLIST
      - [ ] No
    - How confidential is the data?
      - [ ] 1:low
-     - [ ] 2
-     - [ ] 3
-     - [ ] 4
      - [ ] 5:high. Enable encryption at rest and at transit.
    - Choose a device for the server: 
      - [ ] Physical server
@@ -25,22 +22,38 @@ CHECKLIST
      - [ ] Raspberry Pi
 2. Manage users and permissions 
    1. Manage users
-      1. Create a user account 
+      1. Create a user account
+         1. [ ] Create a user: ```sudo adduser <username>```
+         2. [ ] Confirm user has been created: ```cat /etc/passwd``` & ```sudo cat /etc/shadow```
+         3. [ ] Login as user (with user's password): ```su - <username>``` (or) Login as user (with your password): ```sudo su - <username>```
+         4. [ ] Ensure that the user directory exists in ```/home/<username>```
+         5. [ ] Exit from <username>: ```exit```
       2. Remove a user
-      3. Distribute a default configuration file
+         1. [ ] Delete the user: ```sudo userdel <username>``` (Does **not** remove contents of users' home directory)
+         2. [ ] Move contents of users home directory to archives: ```sudo mv /home/<username> /store/file_archive```
+      3. Distribute a default configuration file (/etc/skel)
+         4. [ ] View contents of directory: ```ls -al /etc/skel```
+         5. [ ] Add content .... 
    2. Manage groups
-      1. Create a group
-      2. Add user to a group
-      3. Remove user from a group
-      4. Change a user's primary group
+      1. View all groups in server: ```cat /etc/group```
+      2. View groups associated with a user: ```groups <username>```
+      3. Create a new group: ```sudo groupadd <groupname>```
+      4. Delete a group: ```sudo groupdel <groupname>```
+      5. Add user to a group: ```sudo gpasswd -a <username> <groupname>``` (or) ```sudo usermod -aG <groupname> <username>```
+      6. Remove user from a group: ```sudo gpasswd -d <username> <groupname>```
+      7. Change a user's primary group: ```sudo usermod -g <groupname> <username>```
+      8. Change a user's primary directory: 
+         1. Move old home dir to new home dir: ```sudo usermod -d <new_dir_path> <old_username>```
+         2. Change the username: ```sudo usermod -l <new_username> <old_username>```
    3. Manage password and password policies
       1. Lock a user account
       2. Unlock a user account
-      3. Set password expiration information
+      3. Check when users password was last changed: ```sudo passwd -S <username>```
+      4. Set password expiration information
       4. Set a password policy
    4. Configure administrator access with sudo
-      1. Add users to the sudo group using ```sudo usermod -aG <username>```
-      2. Add sudo to users using ```visudo```
+      1. Add users to the sudo group using ```sudo usermod -aG sudo <username>```
+      2. Add sudo to users using ```visudo``` (edit: /etc/sudoers)
          1. Users is able to use sudo from which terminals: xxx 
          2. User is able to impersonate which users: xxx 
          3. User is able to impersonate which groups: xxx
