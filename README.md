@@ -1,7 +1,134 @@
-# setting-up-a-linux-vm
-# Setting up a linux virtual machine to run scripts
+# Setting up a linux virtual machine
 
-## 1. Create the linux virtual machine
+Make a copy of this checklist, and use it to install and deploy your linux virtual machine.
+
+CHECKLIST
+1. Deploy the server
+   - [ ] Distribution: Ubuntu
+   - [ ] Confirm minimum requirements: 64-bit CPU, 1 GB RAM, 10-GB hard disk (> 16 GB recommended))
+   - [ ] Confirm role: Database server, file server, web server ...
+   - Is the system mission-critical? 
+     - [ ] Yes. Plan backup and recovery.
+     - [ ] No
+   - How confidential is the data?
+     - [ ] 1:low
+     - [ ] 2
+     - [ ] 3
+     - [ ] 4
+     - [ ] 5:high. Enable encryption at rest and at transit.
+   - Choose a device for the server: 
+     - [ ] Physical server
+     - [ ] Desktop
+     - [ ] Laptop
+     - [ ] Virtual machine
+     - [ ] Virtual private server
+     - [ ] Raspberry Pi
+2. Manage users and permissions 
+   1. Manage users
+      1. Create a user account 
+      2. Remove a user
+      3. Distribute a default configuration file
+   2. Manage groups
+      1. Create a group
+      2. Add user to a group
+      3. Remove user from a group
+      4. Change a user's primary group
+   3. Manage password and password policies
+      1. Lock a user account
+      2. Unlock a user account
+      3. Set password expiration information
+      4. Set a password policy
+   4. Configure administrator access with sudo
+      1. Add users to the sudo group using ```sudo usermod -aG <username>```
+      2. Add sudo to users using ```visudo```
+         1. Users is able to use sudo from which terminals: xxx 
+         2. User is able to impersonate which users: xxx 
+         3. User is able to impersonate which groups: xxx
+         4. User is able to run which commands: xxx
+   5. Set permission on files and directories
+      1. Change permissions on a file (using octal notations)
+      2. Change permission on a directory
+      3. Change ownership of a file/directory
+3. Manage software packages
+   1. Search for a package
+   2. Install a package
+   3. Remove a package
+   4. Manage package repositories
+   5. Backup Debian packages
+      1. [ ] Get a list of installed packages
+      2. [ ] Update the index of available packages
+      3. [ ] Ensure we have ```dselect``` package installed
+      4. [ ] Import previously saved package list and have the missing packages installed on the server
+   5. Clean up orphaned packages
+4. Manage processes
+   - Manage jobs
+   - View running processes
+   - Change priority of processes
+   - Deal with misbehaving processes
+   - Manage system processes
+   - Schedule tasks
+5. Monitoring system resources
+   - Disk usage
+   - Memory usage
+   - Load average
+   - Resource usage
+5. Manage storage volumes
+   1. Add additional storage volumes
+   2. Format and partition storage devices
+   3. Mount and unmount volumes
+   4. /etc/fstab
+   5. Backup and restoring volumes
+   6. Utilize LVM
+6. Connect to networks
+   1. Set the hostname
+   2. Manage the network interface
+   3. Assign a static IP address
+   4. OpenSSH & key management
+      1. Install OpenSSH
+      2. Ensure that the OpenSSH service is running
+      2. Generate public and private keys
+      3. Copying public keys to remote servers
+      4. Utilizing an SSH agent 
+      5. Change the passphrase of an OpenSSH key
+      6. Simplify SSH connections with a config file
+7. Setup network services
+   1. Plan your IP address scheme
+   2. Setup a DHCP server for serving IP addresses
+   3. Add a DNS server
+   4. Setup an internet gateway
+8. Share and transfer files
+   1. Setup NFS share
+   2. Transfer files with ```rsync```
+   3. Transfer files with ```scp```
+9. Manage databases
+   1. MariaDB
+      1. Install MariaDB
+      2. Update the MariaDB configuration files
+      3. Manage the MariaDB database
+      4. Setup a secondary database server
+10. Secure the server
+    1. Lower the attach surface
+    2. Respond to CVEs
+    3. Automatically installing patches with Canonical Livepatch service
+    4. Install security updates
+    5. Securing OpenSSH
+    6. Install and configure Fail2ban
+    7. MariaDB best practices for secure database servers
+    8. Setup a firewall
+    9. Encrypt and decrypt disks using LUKS
+    10. Locking down SUDO
+11. Troubleshooting
+    1. View system logs
+    2. Trace network issues
+    3. Troubleshoot resource issues
+    4. Diagnosing defective RAM
+13. Prevent disasters
+    1. Utilize git for configuration management
+    2. Implement a backup plan
+
+--- 
+
+## 1. Create the linux virtual machine / Deploy the server
 - Ensure you have SSH key authentication for root user. See below.
 - apt update
 - apt upgrade
