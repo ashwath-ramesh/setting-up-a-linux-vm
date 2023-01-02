@@ -126,10 +126,22 @@ CHECKLIST
       1. Install OpenSSH
       2. Ensure that the OpenSSH service is running
       2. Generate public and private keys
-      3. Copying public keys to remote servers
-      4. Utilizing an SSH agent 
+         1. Goto: ```/home/user/.ssh``` folder 
+         2. ```ssh-keygen``` or ```ssh-keygen -t rsa -b 4096``` or ```ssh-keygen -t rsa -b 4096 -C "my_comment"```
+      3. Copying public keys to remote servers: ```ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.1.150```
+      4. Utilizing an SSH agent: 
+         1. Start the agent on the local machine: ```eval $(ssh-agent)```
+         2. Give the path to the private key: ```ssh-add ~/.ssh/id_rsa```
+         3. Save catchphrase when asked for it. 
+         4. Connect to the remote server. No more passphrase required.
       5. Change the passphrase of an OpenSSH key
+         1. ```ssh-keygen -p```
+         2. Then enter the directory path to the private key
+         3. Enter new catchphrase
       6. Simplify SSH connections with a config file
+         1. Go to local machine config file: ```nano /home/user/.ssh/config```
+         2. Edit file with Hostname, Host, Port, User, ...
+      7. Disable password based authentication
 7. Setup network services
    1. Plan your IP address scheme
    2. Setup a DHCP server for serving IP addresses
@@ -138,6 +150,10 @@ CHECKLIST
 8. Share and transfer files
    1. Setup NFS share
    2. Transfer files with ```rsync```
+      1. Copy contents of a directory to another directory: ```rsync -avr <source_dir> <destination_dir>```
+      2. Copy over SSH to another server. Variations:
+         1. ```rsync -avz -e 'ssh config_hostname' :<source_dir> <destination_dir>```
+         2. ```rsync -a username@remote_host:/home/username/dir1 place_to_sync_on_local_machine```
    3. Transfer files with ```scp```
 9. Manage databases
    1. MariaDB
@@ -151,6 +167,28 @@ CHECKLIST
     3. Automatically installing patches with Canonical Livepatch service
     4. Install security updates
     5. Securing OpenSSH
+       1. All changes to be made in file: ```sudo nano /etc/ssh/sshd_config```
+       2. Change the port number on which OpenSSH listens
+          2. Change line ```Port 22 to Port 2222```
+          3. Restart: ```sudo systemctl restart ssh```
+       2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
+          2. Change line ```Protocol 1 to Protocol 2```
+          3. Restart: ```sudo systemctl restart ssh```
+       3. Allow SSH logins only for specific users
+          1. First create a new group: ```sudo groupadd sshusers```
+          2. Then make one or more users members of that group: ```ssh usermod -aG sshusers <myuser>```
+          3. Goto file: ```sudo nano /etc/ssh/sshd_config```
+          4. ```AllowUsers user1 user2``` 
+       4. Dont permit Root login via SSH
+          2. Change: PermitRootLogin yes to PermitRootLogin no
+          3. Restart: ```sudo systemctl restart ssh```
+       5. Dont allow password authentication
+          2. Change: PasswordAuthentication yes to PasswordAuthentication no
+          3. Restart: ```sudo systemctl restart ssh```
+          4. Sometimes the sshd/config file contains: ```Include /etc/ssh/sshd_config.d/*.conf``` 
+             1. Goto: ```sudo nano /etc/ssh/sshd_config.d/*.conf```
+             2. Change: PasswordAuthentication yes to PasswordAuthentication no
+             3. Restart: ```sudo systemctl restart ssh```
     6. Install and configure Fail2ban
     7. MariaDB best practices for secure database servers
     8. Setup a firewall
