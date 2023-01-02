@@ -59,9 +59,17 @@ CHECKLIST
          3. User is able to impersonate which groups: xxx
          4. User is able to run which commands: xxx
    5. Set permission on files and directories
-      1. Change permissions on a file (using octal notations)
-      2. Change permission on a directory
-      3. Change ownership of a file/directory
+      1. Change permissions (using octal notations): ```chmod [options] <permissions> <file>``` (Ref: ```https://quickref.me/chmod```) 
+         1. on a file: ```chmod 755 foo.txt```
+         2. on a directory: ```chmod -R 755 my_directory```
+      2. Change ownership:
+         1. To a new user only:
+            1. of a file: ```chown <to_user> <filename>```
+            2. of a directory (and all its files & dirs): ```chown -R <to_user> <dir>```
+         2. To a new group only:
+            1. of a file: ```chgrp <to_group> <filename>```
+            2. of a directory (and all its files & dirs): ```chgrp -R <to_group> <dir>```
+         3. To a new user & new group: ```chown <to_user>:<to_group> <filename>```
 3. Manage software packages
    1. Search for a package
    2. Install a package
@@ -74,12 +82,30 @@ CHECKLIST
       4. [ ] Import previously saved package list and have the missing packages installed on the server
    5. Clean up orphaned packages
 4. Manage processes
-   - Manage jobs
-   - View running processes
+   - View jobs: ```jobs```
+   - Move to background: ```<command> &```
+   - Move to foreground: ```fg <job_number>```
+   - View running processes: 
+     - All: ```ps aux```
+     - Specific process: ```ps aux  | grep <process_name>```
+     - Top 5 high CPU consuming processes: ```ps aux --sort=-pcpu | head -n 5```
+     - Top 5 high Memory consuming processes: ```ps aux --sort=-pmem | head -n 5```
    - Change priority of processes
    - Deal with misbehaving processes
+     - Kill process gracefully: ```kill -15 <pid>```
+     - Kill process forcefully: ```kill -9 <pid>```
+     - Kill all process by name: ```killall <process_name>```
    - Manage system processes
+     - Find system process: ```systemctl | grep <process_name>```
+     - Check status: ```systemctl status <process_name>```
+     - Start a process: ```systemctl start <process_name>```
+     - Stop a process: ```systemctl stop <process_name>```
+     - Enable a process: ```systemctl enable <process_name>```
+     - Disable a process: ```systemctl disable <process_name>```
+     - Restart a process: ```systemctl restart <process_name>```
    - Schedule tasks
+     - Edit: ```crontab -e```
+     - View: ```crontab -l```
 5. Monitoring system resources
    - Disk usage
    - Memory usage
