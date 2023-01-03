@@ -128,7 +128,8 @@ CHECKLIST
       2. Generate public and private keys
          1. Goto: ```/home/user/.ssh``` folder 
          2. ```ssh-keygen``` or ```ssh-keygen -t rsa -b 4096``` or ```ssh-keygen -t rsa -b 4096 -C "my_comment"```
-      3. Copying public keys to remote servers: ```ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.1.150```
+         3. ```ssh-keygen -t ed25519```
+      3. Copying public keys to remote servers: ```ssh-copy-id -p 2222 -i ~/.ssh/id_rsa.pub username@192.168.1.150```
       4. Utilizing an SSH agent: 
          1. Start the agent on the local machine: ```eval $(ssh-agent)```
          2. Give the path to the private key: ```ssh-add ~/.ssh/id_rsa```
@@ -169,23 +170,23 @@ CHECKLIST
     5. Securing OpenSSH
        1. All changes to be made in file: ```sudo nano /etc/ssh/sshd_config```
        2. Change the port number on which OpenSSH listens
-          2. Change line ```Port 22 to Port 2222```
-          3. Restart: ```sudo systemctl restart ssh```
+          1. Change line ```Port 22 to Port 2222```
+          2. Restart: ```sudo systemctl restart ssh```
        2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
-          2. Change line ```Protocol 1 to Protocol 2```
-          3. Restart: ```sudo systemctl restart ssh```
+          1. Change line ```Protocol 1 to Protocol 2```
+          2. Restart: ```sudo systemctl restart ssh```
        3. Allow SSH logins only for specific users
           1. First create a new group: ```sudo groupadd sshusers```
           2. Then make one or more users members of that group: ```ssh usermod -aG sshusers <myuser>```
           3. Goto file: ```sudo nano /etc/ssh/sshd_config```
           4. ```AllowUsers user1 user2``` 
        4. Dont permit Root login via SSH
-          2. Change: PermitRootLogin yes to PermitRootLogin no
-          3. Restart: ```sudo systemctl restart ssh```
+          1. Change: PermitRootLogin yes to PermitRootLogin no
+          2. Restart: ```sudo systemctl restart ssh```
        5. Dont allow password authentication
-          2. Change: PasswordAuthentication yes to PasswordAuthentication no
-          3. Restart: ```sudo systemctl restart ssh```
-          4. Sometimes the sshd/config file contains: ```Include /etc/ssh/sshd_config.d/*.conf``` 
+          1. Change: PasswordAuthentication yes to PasswordAuthentication no
+          2. Restart: ```sudo systemctl restart ssh```
+          3. Sometimes the sshd/config file contains: ```Include /etc/ssh/sshd_config.d/*.conf``` 
              1. Goto: ```sudo nano /etc/ssh/sshd_config.d/*.conf```
              2. Change: PasswordAuthentication yes to PasswordAuthentication no
              3. Restart: ```sudo systemctl restart ssh```
