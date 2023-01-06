@@ -124,18 +124,59 @@ Note:
 ### 5. Monitoring system resources
 
 1. Disk usage 
+   1. Overview
+      1. ```df -h```
+      2. ```df -i```
+   2. Disk usage by directory (Directory permissions matters ...)
+      1. Manual traversing & checking:
+         1. ```du -hc``` (or) ```du -hsc``` (h: human readable, s: summary, c: cumulative total space used) 
+         2. ```du -h --max-depth=1```
+         3. ```du -h --max-depth=1 | sort -h```
+      2. Using ```ncdu``` (ncurses disk usage)
+         1. ```sudo apt install ncdu```
+         2. ```ncdu```
 2. Memory usage 
-3. Load average 
+   1. Check column 'additional': ```free -m``` (or) ```free```
+   2. Managing swap 
+3. Load average
+   1. View load average (1-5-15 mins): ```uptime``` (or) ```cat /proc/loadavg```
 4. Resource usage
+   1. ```sudo apt install htop```
+   2. ```htop```
 
 ### 6. Manage storage volumes
 
 1. Add additional storage volumes
+   1. When adding additional storage to your system, you should ask yourself the following questions:
+      1. How much storage do you need?
+      2. After you attached it, what device name did it receive? 
+         1. ```sudo fdisk -l``` Use before and after attaching the storage to see the difference.
+         2. ```dmesg --follow```, attach disk, watch output. When done, press Ctrl + c on your keyboard to return to the prompt.
+         3. ```lsblk```
+      3. How do you want the storage device formatted?
+      4. Where do you want it mounted?
 2. Format and partition storage devices
+   1. Create an actual partition on the device: 
+      1. ```sudo fdisk <storage device name>```, e.g: ```sudo fdisk /dev/sdb```
+      2. Which one: Master Boot Record (MBR) ```o``` and GUID Partition Table (GPT) partition tables ```g```?
+      3. Type ```n``` to tell fdisk that you would like to create a new partition
+      4. Then, you’ll be asked if you would like to create a primary or extended partition (if you’ve opted for MBR). With MBR, you would want to choose primary for the first partition, and then you can use extended for creating additional partitions. If you’ve opted for GPT, this prompt won’t appear, as it will create your partition as primary no matter what.
+      5. Partition number: use default
+   2. Format the partition
+      1. ```sudo mkfs.<filesystem type> <storage device name>``` E.g: ```sudo mkfs.ext4 /dev/sdb1``` (recommended by default) (or) ```sudo mkfs.xfs /dev/sdb1```
 3. Mount and unmount volumes
+   1. ```sudo mkdir /mnt/vol1```
+   2. ```sudo mount /dev/sdb1 /mnt/vol1``` (or) ```sudo mount /dev/sdb1 -t ext4 /mnt/vol1```
+   3. In order to ensure the mount is available anytime your server boots up, you’ll need to edit the ```/etc/fstab``` file
 4. /etc/fstab
 5. Backup and restoring volumes
 6. Utilize LVM
+   1. Starting with LVM
+      1. ```apt search lvm2 |grep installed```
+      2. ```sudo apt install lvm2```
+   2. Format logical volumes
+   3. Removing volumes with LVM
+   4. LVM snapshots
 
 ### 7. Connect to networks
 
