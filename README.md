@@ -438,9 +438,24 @@ sudo apt install sqlite3
 #### Logging into a remote server using a specific private key
 - ssh -i ~/.ssh/id_rsa root@123.456.789.012
 
-### Logging from a remote server into GitHub using a specific private key
+#### Logging from a remote server into GitHub using a specific private key
 - Test connection with: ssh -T git@github.com -i ~/.ssh/my_private_key
 
 #### Adding in new public SSH keys to the vm
 - go to: nano ~/.ssh/authorized_keys
 - add the public key in a new line
+  
+#### Git clone a repo to vm
+  - Create an SSH key on local virtual machine
+  - Add that SSH key to your deploy key in the repo
+  - Test that ssh keys works using: ```ssh -T git@github.com -i ~/.ssh/my_private_key```
+  - Create a config file input
+  - - ```nano ~/.ssh/config```
+  - - Add text below
+```
+  Host your_custom_hostname
+    HostName github.com
+    User git
+    IdentityFile /path/to/your/private_key
+ ```
+  - From the folder in which you want your repo: ```git clone git@your_custom_hostname:user/repo.git```
