@@ -438,6 +438,9 @@ sudo apt install sqlite3
 #### Logging into a remote server using a specific private key
 - ssh -i ~/.ssh/id_rsa root@123.456.789.012
 
+### Logging from a remote server into GitHub using a specific private key
+- Test connection with: ssh -T git@github.com -i ~/.ssh/my_private_key
+
 #### Adding in new public SSH keys to the vm
 - go to: nano ~/.ssh/authorized_keys
 - add the public key in a new line
