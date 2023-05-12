@@ -145,6 +145,9 @@ Note:
    2. ```htop```
 
 ### 6. Manage storage volumes
+  
+Managing volumes guide: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/mount-manage-storage.md
+Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/utilize-lvm.md
 
 1. Add additional storage volumes
    1. When adding additional storage to your system, you should ask yourself the following questions:
