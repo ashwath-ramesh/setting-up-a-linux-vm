@@ -309,6 +309,15 @@ Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/manag
          4. sudo systemctl daemon-reload
          5. sudo systemctl restart ssh
          6. sudo service ssh reload
+        (OR)
+        sudo nano /etc/ssh/sshd_config
+        Change line ```Port 22 to Port 2222```
+        sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket
+        ListenStream=2222
+        sudo systemctl daemon-reload
+        sudo systemctl restart ssh
+  
+  
    2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
       1. Change line ```Protocol 1 to Protocol 2```
       2. Restart: ```sudo systemctl restart ssh```
