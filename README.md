@@ -306,7 +306,9 @@ Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/manag
             1. [Socket]
             2. ListenStream=
             3. ListenStream=2222
-         4. sudo service ssh reload
+         4. sudo systemctl daemon-reload
+         5. sudo systemctl restart ssh
+         6. sudo service ssh reload
    2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
       1. Change line ```Protocol 1 to Protocol 2```
       2. Restart: ```sudo systemctl restart ssh```
