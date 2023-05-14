@@ -294,30 +294,17 @@ Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/manag
 2. Respond to CVEs
 3. Automatically installing patches with Canonical Livepatch service
 4. Install security updates
-5. Securing OpenSSH
-   1. All changes to be made in file: ```sudo nano /etc/ssh/sshd_config```
-   2. Change the port number on which OpenSSH listens
+5. Securing OpenSSH (All changes to be made in file: ```sudo nano /etc/ssh/sshd_config```)
+   1. Change the port number on which OpenSSH listens
       1. Change line ```Port 22 to Port 2222```
       2. Restart: ```sudo systemctl restart ssh```
-      3. From Ubunto 22.10 Important note: https://discourse.ubuntu.com/t/sshd-now-uses-socket-based-activation-ubuntu-22-10-and-later/30189/9
-         1. sudo mkdir -p /etc/systemd/system/ssh.socket.d
-         2. sudo nano /etc/systemd/system/ssh.socket.d/listen.conf 
-         3. Add the following lines to the file:
-            1. [Socket]
-            2. ListenStream=
-            3. ListenStream=2222
-         4. sudo systemctl daemon-reload
-         5. sudo systemctl restart ssh
-         6. sudo service ssh reload
-        (OR)
-        sudo nano /etc/ssh/sshd_config
+      3. From Ubunto 22.10, 
+      4. ```sudo nano /etc/ssh/sshd_config```
         Change line ```Port 22 to Port 2222```
-        sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket
-        ListenStream=2222
-        sudo systemctl daemon-reload
-        sudo systemctl restart ssh
-  
-  
+        ```sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket```
+        ```Change ListenStream to ListenStream=2222``` or any port number
+        ```sudo systemctl daemon-reload```
+        ```sudo systemctl restart ssh```
    2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
       1. Change line ```Protocol 1 to Protocol 2```
       2. Restart: ```sudo systemctl restart ssh```
@@ -337,10 +324,32 @@ Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/manag
          2. Change: PasswordAuthentication yes to PasswordAuthentication no
          3. Restart: ```sudo systemctl restart ssh```
 6. Install and configure Fail2ban
+   1. Install: ```sudo apt install fail2ban```
+   2. You shouldn’t use its default config file. The default file is /etc/ fail2ban/jail.conf.  Since this file can be overwritten. Fail2ban also reads the  /etc/fail2ban/jail.local file, if it exists. the presence of a jail. local file will supersede the jail.conf file.
+   3. Make a copy of jail. conf and save it as jail.local: ```sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local```
+   4. ```sudo nano /etc/fail2ban/jail.local```
+   5. The first configuration item to change is located on or around line 92 and is commented out: ```#ignoreip = 127.0.0.1/8 ::1``` Uncomment this.
+   6. Add IPs that you want to whitelist: ```ignoreip = 127.0.0.1/8 ::1 ip1 ip2```
+   7. ```bantime = 10m```
+   8. ```maxretry = 5```
+   9. Jails: Look for this option underneath [sshd]: ```port = ssh```. Change this to your new port number if applicable.
+   10. Restart Fail2ban and then check its status:
+       1. ```sudo systemctl restart fail2ban``` 
+       2. ```sudo systemctl status -l fail2ban```
+       3. ```sudo fail2ban-client status```
 7. MariaDB best practices for secure database servers
-8. Setup a firewall
+   1. Configure ```/etc/hosts.allow``` & ```/etc/hosts.deny```: with home, office, and DO IPs (Especially if it is a database server)
+8. Setup a firewall (Uncomplicated Firewall (UFW))
 9. Encrypt and decrypt disks using LUKS
 10. Locking down SUDO
+
+Check logs on security here 
+- ```sudo last```: provides a list of all users and terminals that have logged into the server. reads data from the /var/log/wtmp file.
+- ```sudo lastb```: The lastb command shows the bad login attempts.
+- ```grep 'Failed password' /var/log/auth.log``` : All authentication related events, successful or not, are logged in /var/log/auth.log file
+- ```grep 'Accepted password' /var/log/auth.log```: All authentication related events, successful or not, are logged in /var/log/auth.log file
+- ```lastlog``` : displays the details of the last login of all users or of a given user. It's important to note that this command doesn't show any IP addresses
+- ```sudo cat /var/log/fail2ban.log``` : Fail2Ban logs its actions here
 
 ### 12. Troubleshooting
 
