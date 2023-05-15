@@ -146,6 +146,8 @@ Note:
 
 ### 6. Manage storage volumes
   
+Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes.md) 
+
 Managing volumes guide: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/mount-manage-storage.md
 
 Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/utilize-lvm.md
