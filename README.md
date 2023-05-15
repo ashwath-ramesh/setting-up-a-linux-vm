@@ -146,43 +146,7 @@ Note:
 
 ### 6. Manage storage volumes
   
-Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes.md) 
-
-Managing volumes guide: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/mount-manage-storage.md
-
-Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/managing-volumes-on-an-ubuntu-server/blob/main/utilize-lvm.md
-
-1. Add additional storage volumes
-   1. When adding additional storage to your system, you should ask yourself the following questions:
-      1. How much storage do you need?
-      2. After you attached it, what device name did it receive? 
-         1. ```sudo fdisk -l``` Use before and after attaching the storage to see the difference.
-         2. ```dmesg --follow```, attach disk, watch output. When done, press Ctrl + c on your keyboard to return to the prompt.
-         3. ```lsblk```
-      3. How do you want the storage device formatted?
-      4. Where do you want it mounted?
-2. Format and partition storage devices
-   1. Create an actual partition on the device: 
-      1. ```sudo fdisk <storage device name>```, e.g: ```sudo fdisk /dev/sdb```
-      2. Which one: Master Boot Record (MBR) ```o``` and GUID Partition Table (GPT) partition tables ```g```?
-      3. Type ```n``` to tell fdisk that you would like to create a new partition
-      4. Then, you’ll be asked if you would like to create a primary or extended partition (if you’ve opted for MBR). With MBR, you would want to choose primary for the first partition, and then you can use extended for creating additional partitions. If you’ve opted for GPT, this prompt won’t appear, as it will create your partition as primary no matter what.
-      5. Partition number: use default
-   2. Format the partition
-      1. ```sudo mkfs.<filesystem type> <storage device name>``` E.g: ```sudo mkfs.ext4 /dev/sdb1``` (recommended by default) (or) ```sudo mkfs.xfs /dev/sdb1```
-3. Mount and unmount volumes
-   1. ```sudo mkdir /mnt/vol1```
-   2. ```sudo mount /dev/sdb1 /mnt/vol1``` (or) ```sudo mount /dev/sdb1 -t ext4 /mnt/vol1```
-   3. In order to ensure the mount is available anytime your server boots up, you’ll need to edit the ```/etc/fstab``` file
-4. /etc/fstab
-5. Backup and restoring volumes
-6. Utilize LVM
-   1. Starting with LVM
-      1. ```apt search lvm2 |grep installed```
-      2. ```sudo apt install lvm2```
-   2. Format logical volumes
-   3. Removing volumes with LVM
-   4. LVM snapshots
+Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes.md)
 
 ### 7. Connect to networks
 
@@ -288,7 +252,7 @@ Setting up LVM for Filesystem & MariaDB: https://github.com/ashwath-ramesh/manag
          6. ```DROP TABLE Employees;```
          7. ```DROP DATABASE mysampledb;```
    4. Backup a database (from Linux terminal): ```mysqldump -u admin -p --databases mysampledb > mysampledb.sql;``` (or) ```mysqldump -u admin -p --databases mysampledb > /path/to/output/mysampledb.sql;```
-4. Setup a secondary database server
+4. Setup a secondary database server: [managing_databases.md](managing_databases.md)
 
 ### 11. Secure the server
 
