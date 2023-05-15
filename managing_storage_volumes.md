@@ -177,14 +177,14 @@ Notes
 
 1. Add volume to the server on digital ocean/linode.
 2. Setup a physical volume (that is not yet claimed by LVM)
-   2. ```sudo pvcreate /dev/sda```: Setup physical volume on the new volume.
-   3. ```sudo pvdisplay```: Use the command as root to display the physical volumes you have available on your server.
+   1. ```sudo pvcreate /dev/sda```: Setup physical volume on the new volume.
+   2. ```sudo pvdisplay```: Use the command as root to display the physical volumes you have available on your server.
 4. Create a volume group
-   5. ```sudo vgcreate vg-db-static-backup /dev/sda```: Create a volume group called vg-db-static-backup using the physical volume /dev/sda.
-   6. ```sudo vgdisplay```: Use the command as root to display the volume groups you have available on your server.
+   1. ```sudo vgcreate vg-db-static-backup /dev/sda```: Create a volume group called vg-db-static-backup using the physical volume /dev/sda.
+   2. ```sudo vgdisplay```: Use the command as root to display the volume groups you have available on your server.
 5. Create a logical volume (and assign a portion of the disk to a logical volume)
-   7. ```sudo lvcreate -n myvol1 -L 5g vg-db-static-backup```: Create a logical volume called myvol1 with 5GB of space from the volume group vg-db-static-backup.
-   8. ```sudo lvdisplay```: Use the command as root to display the logical volumes you have available on your server.
+   1. ```sudo lvcreate -n myvol1 -L 5g vg-db-static-backup```: Create a logical volume called myvol1 with 5GB of space from the volume group vg-db-static-backup.
+   2. ```sudo lvdisplay```: Use the command as root to display the logical volumes you have available on your server.
 6. ```sudo mkfs.ext4 /dev/vg-test/myvol1```: Format the logical volume
 7. ```sudo mkdir /mnt/db-static-backup```: Create a directory to mount the logical volume to.
 8. ```sudo mount /dev/vg-db-static-backup/myvol1 /mnt/db-static-backup```: Mount the logical volume to the directory.
@@ -197,21 +197,35 @@ Notes
 
 ### 10.c. How to add additional storage space
 
+#### 10.c.1. Add a new physical volume to the server and extend the volume group + logical volume
+
 1. ```df -h```: Check the size of the logical volume.
 2. ```lsblk```: Check the storage space you have available.
-2. Add volume to the server on digital ocean/linode.
-2. Setup a physical volume (that is not yet claimed by LVM)
-   2. ```sudo pvcreate /dev/sda```: Setup physical volume on the new volume.
-   3. ```sudo pvdisplay```: Use the command as root to display the physical volumes you have available on your server.
-4. ```sudo vgextend vg-db-static-backup /dev/sdc```: Add the new physical volume to the volume group. 
-   5. ```sudo vgextend <volume-group-to-expand> <using-volume>```
+3. Add volume to the server on digital ocean/linode.
+4. Setup a physical volume (that is not yet claimed by LVM)
+   1. ```sudo pvcreate /dev/sda```: Setup physical volume on the new volume.
+   2. ```sudo pvdisplay```: Use the command as root to display the physical volumes you have available on your server.
+5. ```sudo vgextend vg-db-static-backup /dev/sdc```: Add the new physical volume to the volume group. 
+   1. ```sudo vgextend <volume-group-to-expand> <using-volume>```
 6. ```lsblk```: Check the storage space you have available. There should be no change yet in space listed.
 7. ```sudo vgdisplay```: you should see free space available in the volume group.
 8. Are you going to expand existing logical volumes or create new logical volumes?
 9. If we want to expand exiting logical volumes:
-   10. ```sudo lvextend -L +10G /dev/mapper/vg--db--static--backup-myvol1```: Expand the logical volume by 10GB. (Also you can do +100%FREE)
-   11. ```sudo resize2fs /dev/mapper/vg--db--static--backup-myvol1```: Resize the ext4 filesystem that resides on this logical volume.
-12. ```df -h```: Check the size of the logical volume. You should have the new volume.
+   1. ```sudo lvextend -L +10G /dev/mapper/vg--db--static--backup-myvol1```: Expand the logical volume by 10GB. (Also you can do +100%FREE)
+   2. ```sudo resize2fs /dev/mapper/vg--db--static--backup-myvol1```: Resize the ext4 filesystem that resides on this logical volume.
+10. ```df -h```: Check the size of the logical volume. You should have the new volume.
+
+#### 10.c.2. Resize the existing physical volume (E.g. on Digital Ocean / Linode) and extend the volume group + logical volume
+
+1. ```df -h```: Check the size of the logical volume.
+2. ```lsblk```: Check the storage space you have available.
+3. ```sudo pvresize /dev/sda```: Resize the physical volume.
+4. ```sudo vgdisplay```: you should see free space available in the volume group.
+5. Are you going to expand existing logical volumes or create new logical volumes?
+6. If we want to expand exiting logical volumes:
+   1. ```sudo lvextend -L +10G /dev/mapper/vg--db--static--backup-myvol1```: Expand the logical volume by 10GB. (Also you can do +100%FREE)
+   2. ```sudo resize2fs /dev/mapper/vg--db--static--backup-myvol1```: Resize the ext4 filesystem that resides on this logical volume.
+9. ```df -h```: Check the size of the logical volume. You should have the new volume.
 
 ### 10.d. How to automatically mount the logical volume on server reboot
 
