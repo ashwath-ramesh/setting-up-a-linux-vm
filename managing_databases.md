@@ -2,8 +2,33 @@
 
 Steps
 1. Use Logical Volume Manager (LVM) to create a new volume group
+2. Change where the data is stored in mariadb-server
 2. Backup and restore databases
 
+## Change the location of the database storage for mariadb-server
+
+Use this in case you want to change the location of the default mariadb-server installation to a different location, say a mounted volume.
+
+- ```grep 'datadir' /etc/mysql/mariadb.conf.d/50-server.cnf```: check the current location of the database
+- ```mysql -u root -p -e "SHOW VARIABLES LIKE 'datadir';```: check the current location of the database
+- ```sudo systemctl stop mariadb```: stop the mariadb service
+- ```sudo rsync -av /var/lib/mysql /mnt/db-secondary```: copy the database to the new location
+- ```sudo mv /var/lib/mysql /var/lib/mysql.bak```: move the old database to a backup location
+- ```sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf```: Edit the MariaDB configuration file
+- ```datadir         = /mnt/db-secondary/mysql```: Look for the datadir line and change its path to the new one.
+- ```sudo chown -R mysql:mysql /mnt/db-secondary/mysql```: change ownership of the new database location
+- ```sudo restorecon -Rv /mnt/db-secondary/mysql```: restore the security context of the new database location (Ensure selinux context is the same (if selinux is enabled in your OS))
+- ```sudo systemctl start mariadb```: restart the mariadb service
+- ```sudo systemctl status mariadb```: check the status of the mariadb service
+- ```mysql -u root -p -e "SHOW VARIABLES LIKE 'datadir';```: check the current location of the database
+- You should see:
+```
++---------------+-----------------------+
+| Variable_name | Value                 |
++---------------+-----------------------+
+| datadir       | /mnt/db-secondary/mysql/ |
++---------------+-----------------------+
+```
 
 ## Backup and Restore databases
 
