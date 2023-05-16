@@ -102,6 +102,7 @@ On the primary server
 
 On the primary server: Transfer the backup file to the secondary server
 - ```rsync -avz -e 'ssh -p 2122' --progress --partial mysampledb.sql username@111.111.11.11:/mnt/db-static-backup/```
+- ```rsync -avz -e 'ssh -i /path_to_private_key -p 2122' --progress --partial mysampledb.sql username@111.111.11.11:/mnt/db-static-backup/```
 
 On the secondary server
 - ```mariadb -u admin -p < /mnt/db-static-backup/mysampledb.sql```: restore database
