@@ -266,11 +266,11 @@ Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes
       2. Restart: ```sudo systemctl restart ssh```
       3. From Ubunto 22.10, 
       4. ```sudo nano /etc/ssh/sshd_config```
-        Change line ```Port 22 to Port 2222```
-        ```sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket```
-        ```Change ListenStream to ListenStream=2222``` or any port number
-        ```sudo systemctl daemon-reload```
-        ```sudo systemctl restart ssh```
+         1. Change line ```Port 22 to Port 2222```
+         2. ```sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket```
+         3. ```Change ListenStream to ListenStream=2222``` or any port number
+         4. ```sudo systemctl daemon-reload```
+         5. ```sudo systemctl restart ssh```
    2. Change to Protocol 2 from Protocol 1 (only for older Linux versions)
       1. Change line ```Protocol 1 to Protocol 2```
       2. Restart: ```sudo systemctl restart ssh```
