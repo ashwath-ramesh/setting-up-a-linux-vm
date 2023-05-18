@@ -235,3 +235,18 @@ See above steps on editing /etc/fstab file.
 
 14. you may have additional physical volumes that have yet to be assigned to a volume group
     * We can add additional physical volumes to our volume group with the vgextend command. E.g: ```sudo vgextend vg-test /dev/sdc```
+
+### 10.e. How to remove a logical volume
+
+- ```df -h``` - Check the size of the logical volume.
+- ```sudo umount /mnt/db-static-backup/myvol1``` - Unmount the logical volume from the directory.
+- ```sudo lsof /dev/vg-db-secondary/myvol1``` - Check if there are any processes using the logical volume.
+- 
+- ```sudo lvremove /dev/vg-db-secondary/myvol1``` - Remove the logical volume myvol1.
+- ```sudo vgremove vg-db-secondary``` - Remove the volume group vg-db-secondary.
+- ```sudo pvremove /dev/sda``` - Remove the physical volume 
+
+- ```sudo nano /etc/fstab``` - Edit the fstab file to remove the entry for the logical volume.
+- ```sudo mount -a``` - Remount the filesystems listed in fstab. Verify that there are no errors.
+
+- Poweroff your server and remove the volume from your server on digital ocean/linode.
