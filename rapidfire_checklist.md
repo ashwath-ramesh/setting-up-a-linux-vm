@@ -30,42 +30,42 @@
 ## Secure the server
 - [ ] DON’T LOGOUT! Test that you can SSH from another terminal after every change.
 - [ ] Change port number : 
-    - [ ] sudo nano /etc/ssh/sshd_config
-    - [ ] sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket
-    - [ ] sudo systemctl daemon-reload
-    - [ ] sudo systemctl restart ssh
+    - [ ] ```sudo nano /etc/ssh/sshd_config```
+    - [ ] ```sudo nano /etc/systemd/system/sockets.target.wants/ssh.socket```
+    - [ ] ```sudo systemctl daemon-reload```
+    - [ ] ```sudo systemctl restart ssh```
 - [ ] Allow SSH logins only for specific users
-    - [ ] sudo nano /etc/ssh/sshd_config
-    - [ ] AllowUsers user1 user2
-    - [ ] sudo systemctl restart ssh
+    - [ ] ```sudo nano /etc/ssh/sshd_config```
+    - [ ] ```AllowUsers user1 user2```
+    - [ ] ```sudo systemctl restart ssh```
     - [ ] Test with root user (should not be able to SSH anymore)
 - [ ] Don't permit Root login via SSH: 
-    - [ ] sudo nano /etc/ssh/sshd_config
-    - [ ] PermitRootLogin yes to PermitRootLogin no
+    - [ ] ```sudo nano /etc/ssh/sshd_config```
+    - [ ] ```PermitRootLogin yes``` to ```PermitRootLogin no```
 - [ ] Password Authentication
-    - [ ] Ensure that .ssh/authorized_keys exist in user ash
-    - [ ] sudo nano /etc/ssh/sshd_config
-    - [ ] PasswordAuthentication yes to PasswordAuthentication no
-    - [ ] sudo nano /etc/ssh/sshd_config.d/*.conf
-    - [ ] PasswordAuthentication yes to PasswordAuthentication no
-    - [ ] sudo systemctl restart ssh
+    - [ ] Ensure that ```.ssh/authorized_keys``` exist in user ash
+    - [ ] ```sudo nano /etc/ssh/sshd_config```
+    - [ ] ```PasswordAuthentication yes``` to ```PasswordAuthentication no```
+    - [ ] ```sudo nano /etc/ssh/sshd_config.d/*.conf```
+    - [ ] ```PasswordAuthentication yes``` to ```PasswordAuthentication no```
+    - [ ] ```sudo systemctl restart ssh```
     - [ ] Test connection
-    - [ ] REMEMBER: To add .ssh/authorized_keys to used ash’s .ssh folder!!!!!
+    - [ ] REMEMBER: To add ```.ssh/authorized_keys``` to used ash’s .ssh folder!!!!!
 - [ ] Install and configure fail2ban
-- [ ] Configure /etc/hosts.allow & /etc/hosts.deny: with home, office, and DO IPs (Especially if it is a database server)
-    - [ ] sudo nano /etc/hosts.allow 
+- [ ] Configure ```/etc/hosts.allow``` & ```/etc/hosts.deny```: with home, office, and DO IPs (Especially if it is a database server)
+    - [ ] ```sudo nano /etc/hosts.allow ```
         - [ ] ALL: 192.168.1.50
-    - [ ] sudo nano /etc/hosts.deny
+    - [ ] ```sudo nano /etc/hosts.deny```
         - [ ] ALL: ALL
 - [ ] Setup a firewall using Uncomplicated Firewall (UFW) 
 
 ## Check logs on security
-- [ ] sudo last: provides a list of all users and terminals that have logged into the server. reads data from the /var/log/wtmp file.
-- [ ] sudo lastb: The lastb command shows the bad login attempts.
-- [ ] grep 'Failed password' /var/log/auth.log : All authentication related events, successful or not, are logged in /var/log/auth.log file
-- [ ] grep 'Accepted password' /var/log/auth.log: All authentication related events, successful or not, are logged in /var/log/auth.log file
-- [ ] lastlog : displays the details of the last login of all users or of a given user. It's important to note that this command doesn't show any IP addresses
-- [ ] sudo cat /var/log/fail2ban.log : Fail2Ban logs its actions here
+- [ ] ```sudo last```: provides a list of all users and terminals that have logged into the server. reads data from the /var/log/wtmp file.
+- [ ] ```sudo lastb```: The lastb command shows the bad login attempts.
+- [ ] ```grep 'Failed password' /var/log/auth.log``` : All authentication related events, successful or not, are logged in /var/log/auth.log file
+- [ ] ```grep 'Accepted password' /var/log/auth.log```: All authentication related events, successful or not, are logged in /var/log/auth.log file
+- [ ] ```lastlog``` : displays the details of the last login of all users or of a given user. It's important to note that this command doesn't show any IP addresses
+- [ ] ```sudo cat /var/log/fail2ban.log``` : Fail2Ban logs its actions here
 
 ## Mount & manage storage volumes
 
