@@ -159,7 +159,7 @@ Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes
    2. Generate public and private keys
       1. Goto: ```/home/user/.ssh``` folder 
       2. ```ssh-keygen``` or ```ssh-keygen -t rsa -b 4096``` or ```ssh-keygen -t rsa -b 4096 -C "my_comment"```
-      3. ```ssh-keygen -t ed25519```
+      3. ```ssh-keygen -t ed25519``` or ```ssh-keygen -t ed25519 -C ""```
    3. Copying public keys to remote servers: ```ssh-copy-id -p 2222 -i ~/.ssh/id_rsa.pub username@192.168.1.150```
    4. Utilizing an SSH agent: 
       1. Start the agent on the local machine: ```eval $(ssh-agent)```
