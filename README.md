@@ -306,6 +306,18 @@ Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes
 7. MariaDB best practices for secure database servers
    1. Configure ```/etc/hosts.allow``` & ```/etc/hosts.deny```: with home, office, and DO IPs (Especially if it is a database server)
 8. Setup a firewall (Uncomplicated Firewall (UFW))
+   1. IMPORTANT:
+      - **Always allow SSH before enabling UFW to avoid getting locked out.**
+      - **Use ufw status to check which rules are active.**
+      - **Be cautious when setting rules; always ensure you have another way of accessing the server if something goes wrong.**
+   2. STEPS:
+      1. Install UFW: ```sudo apt install ufw```
+      2. Set default policies: ```sudo ufw default deny incoming``` & ```sudo ufw default allow outgoing```
+      3. Allow SSH Access (To ensure you don't lock yourself out, allow SSH traffic): ```sudo ufw allow 2222/tcp```
+      4. Allow Other Services (Optional): ```sudo ufw allow http``` & ```sudo ufw allow https```
+      5. Enable UFW Logging (Optional): ```sudo ufw logging on```
+      6. Check UFW Status and Rules: ```sudo ufw status verbose```
+      7. Enable/Disable UFW: ```sudo ufw enable``` & ```sudo ufw disable```
 9. Encrypt and decrypt disks using LUKS
 10. Locking down SUDO
 
