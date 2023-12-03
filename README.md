@@ -288,7 +288,8 @@ Managing storage volumes: [managing_storage_volumes.md](managing_storage_volumes
       3. Sometimes the sshd/config file contains: ```Include /etc/ssh/sshd_config.d/*.conf``` 
          1. Goto: ```sudo nano /etc/ssh/sshd_config.d/*.conf```
          2. Change: PasswordAuthentication yes to PasswordAuthentication no
-         3. Restart: ```sudo systemctl restart ssh```
+         3. Change: PubkeyAuthentication no to PubkeyAuthentication yes
+         4. Restart: ```sudo systemctl restart ssh```
 6. Install and configure Fail2ban
    1. Install: ```sudo apt install fail2ban```
    2. You shouldn’t use its default config file. The default file is /etc/ fail2ban/jail.conf.  Since this file can be overwritten. Fail2ban also reads the  /etc/fail2ban/jail.local file, if it exists. the presence of a jail. local file will supersede the jail.conf file.
