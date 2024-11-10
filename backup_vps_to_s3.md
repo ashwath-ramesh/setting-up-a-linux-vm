@@ -20,10 +20,10 @@ Test s3cmd
 
 - [ ] List all spaces (buckets): `s3cmd ls`
 - [ ] Create a simple test file: `echo "Hello Digital Ocean Spaces" > test.txt`
-- [ ] Upload the test file: `s3cmd put test.txt s3://backups-main/test.txt`
-- [ ] List contents of your space: `s3cmd ls s3://backups-main/`
-- [ ] Download the file with a different name to verify: `s3cmd get s3://backups-main/test.txt downloaded-test.txt`
+- [ ] Upload the test file: `s3cmd put test.txt s3://backups-production/test.txt`
+- [ ] List contents of your space: `s3cmd ls s3://backups-production/`
+- [ ] Download the file with a different name to verify: `s3cmd get s3://backups-production/test.txt downloaded-test.txt`
 - [ ] View the downloaded file: `cat downloaded-test.txt`
 - [ ] Clean up: 
-  - [ ] `s3cmd del s3://backups-main/test.txt`
+  - [ ] `s3cmd del s3://backups-production/test.txt`
   - [ ] `rm test.txt downloaded-test.txt`
