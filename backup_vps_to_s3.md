@@ -1,5 +1,6 @@
 # How to backup the contents of your VPS
 
+- [ ] Get simple ping URL: `https://healthchecks.io/`
 - [ ] Configure DO spaces bucket: Get access & secret keys
 - [ ] Install s3cmd in the VPS
 - [ ] Test s3cmd
@@ -78,6 +79,7 @@ BACKUP_DIR="/tmp/backup_$(date +%Y%m%d_%H%M%S)"
 SPACE_BUCKET="s3://backups-production/projectXYZ"
 BACKUP_NAME="projectXYZ-backup-$(date +%Y%m%d-%H%M%S)"
 LOG_FILE="/home/ash/backup.log"
+HEALTHCHECKS_URL="https://hc-ping.com/xxx"
 
 # Define items to backup (add or remove paths as needed)
 BACKUP_ITEMS=(
@@ -95,12 +97,17 @@ log() {
 # Error handler
 error_handler() {
     log "Error occurred in backup script (Line $1)"
+    # Notify healthchecks.io of failure
+    curl -fsS -m 10 --retry 5 -o /dev/null "$HEALTHCHECKS_URL/fail" || true
     rm -rf "$BACKUP_DIR" 2>/dev/null || true
     exit 1
 }
 
 # Set error handler
 trap 'error_handler $LINENO' ERR
+
+# Notify healthchecks.io that backup is starting
+curl -fsS -m 10 --retry 5 -o /dev/null "$HEALTHCHECKS_URL/start" || true
 
 # Start backup process
 log "Starting backup process..."
@@ -153,4 +160,7 @@ log "Backup completed successfully"
 # List recent backups
 log "Recent backups in Digital Ocean Spaces:"
 s3cmd ls "$SPACE_BUCKET/" | tail -n 5
+
+# Notify healthchecks.io of successful completion
+curl -fsS -m 10 --retry 5 -o /dev/null "$HEALTHCHECKS_URL" || true
 ```
