@@ -1,10 +1,13 @@
 # How to backup the contents of your VPS
 
-- [ ] Get simple ping URL: `https://healthchecks.io/`
-- [ ] Configure DO spaces bucket: Get access & secret keys
-- [ ] Install s3cmd in the VPS
-- [ ] Test s3cmd
-- [ ] Create a folder for your VPS backups
+1. Get simple ping URL: `https://healthchecks.io/`
+2. Configure DO spaces bucket: Get access & secret keys
+3. Install s3cmd in the VPS
+4. Test s3cmd
+5. Create a folder for your VPS backups
+6. Create backup.sh script
+7. Schedule this on a cron job
+8. Restore a backup
 
 **1. Install s3cmd**
 - [ ] `sudo apt-get install s3cmd`
