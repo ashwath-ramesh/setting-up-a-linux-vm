@@ -5,9 +5,11 @@ Make a copy of this checklist, and use it to install and deploy your linux virtu
 Note:
 
 - This document is intended for my personal use to streamline my personal workflow. This document is not intended to be a comprehensive guide to linux administration.
-- Overall structure/outline for this checklist is based on the excellent book 'Mastering Ubuntu Server' by Jay LaCroix. But contents are inspired by multiple linux references mentioned at the end.
+- Overall structure/outline for this checklist is based on the excellent book `Mastering Ubuntu Server` by `Jay LaCroix`. But contents are inspired by multiple linux references mentioned at the end.
 
 ## CHECKLIST
+
+### [TLDR; Rapidfire Checklist](primary/rapidfire_checklist.md)
 
 ### [Manage Users & Permissions](primary/manage_users_and_permissions.md)
 
